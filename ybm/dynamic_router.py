@@ -2,6 +2,7 @@
 
 from __future__ import print_function
 from django.shortcuts import render_to_response, HttpResponse, redirect
+import ybm
 
 
 def process(request, **kwargs):
@@ -11,22 +12,21 @@ def process(request, **kwargs):
     function = kwargs.get('function', None)
 
     try:
-        appObj = __import__("%s.views" % app)
-        print(appObj)
-        viewObj = getattr(appObj, 'views')
-        print(viewObj)
-        print(function)
-        funcObj = getattr(viewObj, function)
-        print('found function')
+        app_name = "ybm.%s.views" % app
+        print(app_name)
+        moduleObj = __import__(app_name,fromlist=True)
+        funcObj = getattr(moduleObj, function)
 
         # 执行view.py中的函数，并获取其返回值
         result = funcObj(request, kwargs)
-    except (ImportError, AttributeError) as e:
-        # 导入失败时，自定义404错误
-        return HttpResponse('404 Not Found')
+    except ImportError:
+        # 导入模块失败
+        return HttpResponse('导入模块'+app.encode('utf-8')+'失败')
+    except AttributeError:
+        #加载函数失败
+        return HttpResponse('加载函数'+function.encode('utf-8')+'失败')
     except Exception as e:
         # 代码执行异常时，自动跳转到指定页面
-        print(e)
         return redirect('/index/index')
 
     return result

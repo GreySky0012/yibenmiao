@@ -11,6 +11,5 @@ from django.shortcuts import render
 def index(request, args):
     return HttpResponse('user index')
 
-
 def test(request, args):
     return HttpResponse('user test')
