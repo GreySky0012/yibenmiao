@@ -1,15 +1,15 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.http import HttpResponse
 import logging
-from django.shortcuts import render
+
+from django.http import HttpResponse
 
 # Create your views here.
 
 logger = logging.getLogger("ybm")
 
 
-def index(request,args):
+def index(request):
     logger.info("request index")
     return HttpResponse(u'main page')

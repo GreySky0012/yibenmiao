@@ -25,6 +25,5 @@ urlpatterns = [
     # url(r'^(?P<app>(\w+))/(?P<function>(\w+))/(?P<id>(\d+))/$',process),
     url(r'^(?P<app>(\w+))/(?P<function>(\w+))/$', process),
     url(r'^(?P<app>(\w+))/$', process, {'function': 'index'}),
-    #url(r'^index/$', index),
     url(r'^$', index),
 ]
