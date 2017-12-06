@@ -15,7 +15,8 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-from dynamic_router import *
+from ybm.dynamic_router import *
+from index.views import index
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -24,4 +25,6 @@ urlpatterns = [
     # url(r'^(?P<app>(\w+))/(?P<function>(\w+))/(?P<id>(\d+))/$',process),
     url(r'^(?P<app>(\w+))/(?P<function>(\w+))/$', process),
     url(r'^(?P<app>(\w+))/$', process, {'function': 'index'}),
+    #url(r'^index/$', index),
+    url(r'^$', index),
 ]

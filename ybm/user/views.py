@@ -5,8 +5,12 @@ from django.http import HttpResponse
 
 from django.shortcuts import render
 
+
 # Create your views here.
 
-
 def index(request, args):
-    return HttpResponse(u'页面出错')
+    return HttpResponse('user index')
+
+
+def test(request, args):
+    return HttpResponse('user test')

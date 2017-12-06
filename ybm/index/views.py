@@ -5,12 +5,8 @@ from django.http import HttpResponse
 
 from django.shortcuts import render
 
-
 # Create your views here.
 
-def index(request, args):
-    return HttpResponse('URL错误')
 
-
-def test(request, args):
-    return HttpResponse('测试接口')
+def index(request):
+    return HttpResponse(u'main page')
