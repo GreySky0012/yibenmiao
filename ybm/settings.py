@@ -48,7 +48,7 @@ LOGGING = {
         'file_handler': {
             'level': 'DEBUG',
             'class': 'logging.handlers.TimedRotatingFileHandler',
-            'filename': BASE_DIR + 'test.log',
+            'filename': os.path.join(BASE_DIR, 'ybm.log'),
             'formatter': 'standard'
         },  # 用于文件输出
         'console': {
