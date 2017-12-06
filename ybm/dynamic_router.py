@@ -11,7 +11,7 @@ def process(request, **kwargs):
     function = kwargs.get('function', None)
 
     try:
-        appObj = __import__("ybm.%s" % app)
+        appObj = __import__("%s.views" % app)
         print(appObj)
         viewObj = getattr(appObj, 'views')
         print(viewObj)
