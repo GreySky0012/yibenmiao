@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from __future__ import print_function
 from django.conf import settings
 
 DATABASE_MAPPING = settings.DATABASE_APPS_MAPPING
@@ -52,7 +53,7 @@ class DatabaseAppsRouter(object):
 
     # Django 1.7 - Django 1.11
     def allow_migrate(self, db, app_label, model_name=None, **hints):
-        print db, app_label, model_name, hints
+        print(db, app_label, model_name, hints)
         if db in DATABASE_MAPPING.values():
             return DATABASE_MAPPING.get(app_label) == db
         elif app_label in DATABASE_MAPPING:

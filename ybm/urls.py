@@ -20,8 +20,8 @@ from dynamic_router import *
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
 
-    #url(r'^(?P<app>(\w+))/(?P<function>(\w+))/(?P<page>(\d+))/(?P<id>(\d+))/$',process),
-    #url(r'^(?P<app>(\w+))/(?P<function>(\w+))/(?P<id>(\d+))/$',process),
-    url(r'^(?P<app>(\w+))/(?P<function>(\w+))/$',process),
-    url(r'^(?P<app>(\w+))/$',process,{'function':'index'}),
+    # url(r'^(?P<app>(\w+))/(?P<function>(\w+))/(?P<page>(\d+))/(?P<id>(\d+))/$',process),
+    # url(r'^(?P<app>(\w+))/(?P<function>(\w+))/(?P<id>(\d+))/$',process),
+    url(r'^(?P<app>(\w+))/(?P<function>(\w+))/$', process),
+    url(r'^(?P<app>(\w+))/$', process, {'function': 'index'}),
 ]

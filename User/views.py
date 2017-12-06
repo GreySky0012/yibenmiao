@@ -8,8 +8,9 @@ from django.shortcuts import render
 
 # Create your views here.
 
-def index(request,args):
+def index(request, args):
     return HttpResponse('URL错误')
 
-def Test(request,args):
+
+def test(request, args):
     return HttpResponse('测试接口')
