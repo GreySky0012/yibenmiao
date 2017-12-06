@@ -15,7 +15,6 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
@@ -27,7 +26,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -38,8 +36,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    #apps
-    'User',
+    # apps
+    'user',
 ]
 
 MIDDLEWARE = [
@@ -72,7 +70,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'ybm.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
@@ -81,21 +78,21 @@ DATABASES = {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     },
-    'MySQL':{
-        'ENGINE':'django.db.backends.mysql',
-        'NAME':'MySQLdb',
-        'USER':'greysky',
-        'PASSWORD':'hhr#0012',
-        'HOST':'120.79.43.51',
-        'PORT':'3306',
+    'MySQL': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'MySQLdb',
+        'USER': 'test',
+        'PASSWORD': 'test',
+        'HOST': '120.25.240.242',
+        'PORT': '3306',
     },
 }
 
 DATABASE_ROUTERS = ['database_router.DatabaseAppsRouter']
 DATABASE_APPS_MAPPING = {
     # example:
-    #'app_name':'database_name',
-    'User': 'MySQL',
+    # 'app_name':'database_name',
+    'user': 'MySQL',
 }
 
 # Password validation
@@ -116,7 +113,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
 
@@ -129,7 +125,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
