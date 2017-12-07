@@ -144,7 +144,7 @@ DATABASE_ROUTERS = ['ybm.database_router.DatabaseAppsRouter']
 DATABASE_APPS_MAPPING = {
     # example:
     # 'app_name':'database_name',
-    'ybm.user': 'MySQL',
+    'user': 'MySQL',
 }
 
 # Password validation
