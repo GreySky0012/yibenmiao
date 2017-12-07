@@ -18,19 +18,22 @@ class DatabaseAppsRouter(object):
     DATABASE_APPS_MAPPING = {'app1': 'db1', 'app2': 'db2'}
     """
 
-    def db_for_read(self, model, **hints):
+    @staticmethod
+    def db_for_read(model, **hints):
         """"Point all read operations to the specific database."""
         if model._meta.app_label in DATABASE_MAPPING:
             return DATABASE_MAPPING[model._meta.app_label]
         return None
 
-    def db_for_write(self, model, **hints):
+    @staticmethod
+    def db_for_write(model, **hints):
         """Point all write operations to the specific database."""
         if model._meta.app_label in DATABASE_MAPPING:
             return DATABASE_MAPPING[model._meta.app_label]
         return None
 
-    def allow_relation(self, obj1, obj2, **hints):
+    @staticmethod
+    def allow_relation(obj1, obj2, **hints):
         """Allow any relation between apps that use the same database."""
         db_obj1 = DATABASE_MAPPING.get(obj1._meta.app_label)
         db_obj2 = DATABASE_MAPPING.get(obj2._meta.app_label)
@@ -42,7 +45,8 @@ class DatabaseAppsRouter(object):
         return None
 
     # for Django 1.4 - Django 1.6
-    def allow_syncdb(self, db, model):
+    @staticmethod
+    def allow_syncdb(db, model):
         """Make sure that apps only appear in the related database."""
 
         if db in DATABASE_MAPPING.values():
@@ -52,8 +56,8 @@ class DatabaseAppsRouter(object):
         return None
 
     # Django 1.7 - Django 1.11
-    def allow_migrate(self, db, app_label, model_name=None, **hints):
-        print(db, app_label, model_name, hints)
+    @staticmethod
+    def allow_migrate(db, app_label, model_name=None, **hints):
         if db in DATABASE_MAPPING.values():
             return DATABASE_MAPPING.get(app_label) == db
         elif app_label in DATABASE_MAPPING:

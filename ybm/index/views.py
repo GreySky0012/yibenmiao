@@ -1,13 +1,11 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-import logging
 
 from django.http import HttpResponse
 
 # Create your views here.
-
-logger = logging.getLogger("ybm")
+from ybm.settings import logger
 
 
 def index(request):

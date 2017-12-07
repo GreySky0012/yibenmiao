@@ -10,7 +10,7 @@ https://docs.djangoproject.com/en/1.11/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.11/ref/settings/
 """
-
+import logging
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -25,9 +25,10 @@ SECRET_KEY = 'n3(fjs@^usw+)_37wrpnz3^=6)5m4n!2p$8wk13vihfj^%bpv_'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+logger = logging.getLogger("ybm")
 LOGGING = {
     'version': 1,
-    'disable_existing_loggers': True,   # 是否禁用默认日志
+    'disable_existing_loggers': True,  # 是否禁用默认日志
     'filters': {
         'require_debug_true': {
             '()': 'django.utils.log.RequireDebugTrue',
@@ -37,7 +38,7 @@ LOGGING = {
         'standard': {
             'format': '%(levelname)s %(asctime)s %(pathname)s %(filename)s %(module)s %(funcName)s %(lineno)d: %(message)s'
         },  # 对日志信息进行格式化，每个字段对应了日志格式中的一个字段，更多字段参考官网文档，我认为这些字段比较合适，输出类似于下面的内容
-            # INFO 2016-09-03 16:25:20,067 /home/ubuntu/mysite/views.py views.py views get 29: some info...
+        # INFO 2016-09-03 16:25:20,067 /home/ubuntu/mysite/views.py views.py views get 29: some info...
     },
     'handlers': {
         'mail_admins': {
@@ -128,11 +129,14 @@ DATABASES = {
     },
     'MySQL': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'MySQLdb',
+        'NAME': 'test',
         'USER': 'test',
         'PASSWORD': 'test',
         'HOST': '120.25.240.242',
         'PORT': '3306',
+        'OPTIONS': {
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+        },
     },
 }
 
@@ -140,7 +144,7 @@ DATABASE_ROUTERS = ['ybm.database_router.DatabaseAppsRouter']
 DATABASE_APPS_MAPPING = {
     # example:
     # 'app_name':'database_name',
-    'user': 'MySQL',
+    'ybm.user': 'MySQL',
 }
 
 # Password validation

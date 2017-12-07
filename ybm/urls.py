@@ -1,3 +1,4 @@
+# coding=utf-8
 """ybm URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
@@ -20,7 +21,6 @@ from index.views import index
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-
     # url(r'^(?P<app>(\w+))/(?P<function>(\w+))/(?P<page>(\d+))/(?P<id>(\d+))/$',process),
     # url(r'^(?P<app>(\w+))/(?P<function>(\w+))/(?P<id>(\d+))/$',process),
     url(r'^(?P<app>(\w+))/(?P<function>(\w+))/$', process),

@@ -2,7 +2,9 @@
 
 from __future__ import print_function
 
-from django.shortcuts import HttpResponse, redirect
+from django.shortcuts import HttpResponse
+
+from ybm.settings import logger
 
 
 def process(request, **kwargs):
@@ -13,7 +15,6 @@ def process(request, **kwargs):
 
     try:
         app_name = "ybm.%s.views" % app
-        print(app_name)
         moduleObj = __import__(app_name, fromlist=True)
         funcObj = getattr(moduleObj, function)
 
@@ -21,12 +22,15 @@ def process(request, **kwargs):
         result = funcObj(request, kwargs)
     except ImportError:
         # 导入模块失败
-        return HttpResponse('导入模块' + app.encode('utf-8') + '失败')
+        logger.warning('导入模块' + app.encode('utf-8') + '失败')
+        return HttpResponse('404 not found')
     except AttributeError:
         # 加载函数失败
-        return HttpResponse('加载函数' + function.encode('utf-8') + '失败')
+        logger.warning('加载函数' + function.encode('utf-8') + '失败')
+        return HttpResponse('404 not found')
     except Exception as e:
         # 代码执行异常时，自动跳转到指定页面
-        return redirect('/index/index')
+        logger.error(e.message)
+        return HttpResponse(e.message)
 
     return result
