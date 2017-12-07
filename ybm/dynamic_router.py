@@ -2,28 +2,28 @@
 
 from __future__ import print_function
 import json
-from django.shortcuts import HttpResponse
+
+from django.http import HttpResponse, HttpResponseNotFound
 
 from ybm.settings import logger
 
 
 def page(request, **kwargs):
-    '''
+    """
     接收所有
     :param request:
     :param kwargs:
     :return:
-    '''
+    """
     return HttpResponse('HTTP Page')
 
 
-def wrong_api(request, message= ''):
-    '''
+def wrong_api(message):
+    """
     api接口出错
-    :param request:
     :param message:错误信息
     :return:错误提示
-    '''
+    """
     if message == '':
         message = '接口错误'
     logger.warning(message)
@@ -44,12 +44,15 @@ def process(request, **kwargs):
         result = func_obj(request, kwargs)
     except ImportError:
         # 导入模块失败
-        return wrong_api('导入模块' + app_name.encode('utf-8') + '失败')
+        logger.warning('导入模块' + app_name.encode('utf-8') + '失败')
+        return HttpResponseNotFound('导入模块' + app_name.encode('utf-8') + '失败')
     except AttributeError:
         # 加载函数失败
-        return wrong_api('加载函数' + function_name.encode('utf-8') + '失败')
+        logger.warning('加载函数' + function.encode('utf-8') + '失败')
+        return HttpResponseNotFound('加载函数' + function_name.encode('utf-8') + '失败')
     except Exception as e:
         # 代码执行异常时，自动跳转到指定页面
-        return wrong_api(e.message)
+        logger.error(e)
+        return wrong_api(e.args[1])
 
     return result
