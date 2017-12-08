@@ -9,12 +9,12 @@ from django.core import serializers
 from django.http import HttpResponse, HttpResponseNotFound, HttpResponseBadRequest
 
 # Create your views here.
+from ybm.apps.user.models import User
 from ybm.settings import logger
-from ybm.user.models import User
 from ybm.utils.regular_util import is_email
 
 
-def index(request, args):
+def index(request):
     method = request.method
     if method == 'POST':
         return __add_user(request)

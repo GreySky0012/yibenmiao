@@ -88,7 +88,7 @@ INSTALLED_APPS = [
     'rest_framework',
 
     # apps
-    'ybm.user',
+    'ybm.apps.user',
 ]
 
 MIDDLEWARE = [

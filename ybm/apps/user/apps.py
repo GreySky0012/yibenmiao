@@ -5,4 +5,4 @@ from django.apps import AppConfig
 
 
 class UserConfig(AppConfig):
-    name = 'ybm.user'
+    name = 'ybm.apps.user'

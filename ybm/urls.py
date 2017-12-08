@@ -14,7 +14,7 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url,include
+from django.conf.urls import url, include
 from django.contrib import admin
 from ybm.dynamic_router import *
 from index.views import index
@@ -24,13 +24,10 @@ urlpatterns = [
 
     # html url
     url(r'^(?P<app>(\w+))/(?P<function>(\w+))/$', page),
-    url(r'^(?P<app>(\w+))/$', process, {'function': 'index'}),
     url(r'^$', index),
 
     # api url
-    url(r'^api/v1/(?P<app>(\w+))/(?P<function>(\w+))/$', process),
-    url(r'^api/v1/(?P<app>(\w+))/$', process, {'function': 'index'}),
-    url(r'^api/url',wrong_api),
+    url(r'^api/v1/', include('ybm.apps.urls')),
 
     # rest api
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
