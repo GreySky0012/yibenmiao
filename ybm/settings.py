@@ -106,7 +106,7 @@ ROOT_URLCONF = 'ybm.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR],
+        'DIRS': [os.path.join(BASE_DIR, 'ybm', 'page', 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -142,7 +142,7 @@ DATABASES = {
     },
 }
 
-DATABASE_ROUTERS = ['ybm.database_router.DatabaseAppsRouter']
+DATABASE_ROUTERS = ['ybm.apps.database_router.DatabaseAppsRouter']
 DATABASE_APPS_MAPPING = {
     # example:
     # 'app_name':'database_name',

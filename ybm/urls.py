@@ -16,19 +16,17 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
-from ybm.dynamic_router import *
-from index.views import index
+
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
 
-    # html url
-    url(r'^(?P<app>(\w+))/(?P<function>(\w+))/$', page),
-    url(r'^$', index),
+    # rest api
+    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 
     # api url
     url(r'^api/v1/', include('ybm.apps.urls')),
 
-    # rest api
-    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
+    # html url
+    url(r'^', include('ybm.page.urls')),
 ]
