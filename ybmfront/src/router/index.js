@@ -4,6 +4,7 @@ import VueResource from 'vue-resource'
 import HelloWorld from '@/components/HelloWorld'
 import SignIn from '@/components/SignIn'
 import SignUp from '@/components/SignUp'
+import Debug from '@/components/Debug'
 
 Vue.use(VueResource)
 Vue.use(Router)
@@ -24,6 +25,11 @@ export default new Router({
       path: '/sign_in',
       name: 'SignIn',
       component: SignIn
+    },
+    {
+      path: '/debug',
+      name: Debug,
+      component: Debug
     }
   ]
 })
