@@ -1,7 +1,8 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <router-view/>
+    <!--<img src="./assets/logo.png">-->
+    <router-view></router-view>
+    <p class="copyright">Copyright © 2017 ybm. All rights reserved.</p>
   </div>
 </template>
 
@@ -19,5 +20,12 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+p.copyright {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  text-align: center;
 }
 </style>
