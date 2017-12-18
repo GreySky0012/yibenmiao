@@ -1,6 +1,6 @@
 <template>
   <div>
-    <title>HelloWorld</title>
+    <title>User HelloWorld</title>
     <h1>{{msg}}</h1>
   </div>
 </template>
@@ -10,7 +10,7 @@ export default {
   name: 'HelloWorld',
   data () {
     return {
-      msg: 'Welcome to Blog'
+      msg: 'Welcome to User Module'
     }
   }
 }

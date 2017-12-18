@@ -2,28 +2,30 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import VueResource from 'vue-resource'
 import HelloWorld from '@/components/HelloWorld'
-import SignIn from '@/components/SignIn'
-import SignUp from '@/components/SignUp'
+import Test from '@/components/Test/Test'
+import User from '@/components/User/User'
+import {UserRoutes} from './User'
+import {TestRoutes} from './Test'
 
 Vue.use(VueResource)
 Vue.use(Router)
 
 export default new Router({
+  mode: 'history',
   routes: [
     {
       path: '/',
-      name: 'HelloWorld',
       component: HelloWorld
     },
     {
-      path: '/sign_up',
-      name: 'SignUp',
-      component: SignUp
+      path: '/user',
+      component: User,
+      children: UserRoutes
     },
     {
-      path: '/sign_in',
-      name: 'SignIn',
-      component: SignIn
+      path: '/test',
+      component: Test,
+      children: TestRoutes
     }
   ]
 })
