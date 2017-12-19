@@ -12,7 +12,7 @@ from django.http import HttpResponse, HttpResponseNotFound, HttpResponseBadReque
 # Create your views here.
 from ybm.apps.user.models import User
 from ybm.settings import logger
-from ybm.utils.regular_util import *
+from ybm.utils.regular_util import, is_email, is_tel_phone_number
 
 
 @api_view(['GET', 'PUT', 'POST', 'DELETE'])
@@ -55,5 +55,5 @@ def __add_user(request):
 def __delete_user(request):
     user_id = int(request.GET.get("id"))
     User.objects.filter(id=user_id).delete()
-    logger.info('delete user : ' + user_id)
+    logger.info('delete user : ' + str(user_id))
     return HttpResponse('user delete success')

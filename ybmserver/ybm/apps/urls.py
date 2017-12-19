@@ -9,7 +9,7 @@ author = 'qiyue'
 urlpatterns = [
 
     # app url
-    url(r'^user/', include('ybm.apps.user.urls')),
+    url(r'^user', include('ybm.apps.user.urls')),
 
-    url('^debug/$', view=debug),
+    url('^debug/', view=debug),
 ]
