@@ -8,6 +8,7 @@ from django.db import models
 
 class User(models.Model):
     id = models.AutoField
-    name = models.CharField(max_length=20)
+    name = models.CharField(max_length=20, unique=True)
+    password = models.CharField(blank=False, max_length=1024)
     email = models.EmailField(blank=True)
     phone_number = models.CharField(blank=False, max_length=11)

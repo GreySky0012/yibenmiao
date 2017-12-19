@@ -12,7 +12,8 @@ from django.http import HttpResponse, HttpResponseNotFound, HttpResponseBadReque
 # Create your views here.
 from ybm.apps.user.models import User
 from ybm.settings import logger
-from ybm.utils.regular_util import, is_email, is_tel_phone_number
+from ybm.utils.EncryUtil import md5
+from ybm.utils.regular_util import is_email, is_tel_phone_number
 
 
 @api_view(['GET', 'PUT', 'POST', 'DELETE'])
@@ -37,16 +38,20 @@ def __user_list(request):
 def __add_user(request):
     try:
         new_user = User(**json.loads(request.body))
-        if new_user.name is None or new_user.phone_number is None:
-            return HttpResponseBadRequest('name or user name can not be null.')
+        if new_user.name is None or \
+                new_user.phone_number is None or \
+                new_user.password is None:
+            return HttpResponseBadRequest('name, phone number or password can not be null.')
         if not is_email(new_user.email):
             return HttpResponseBadRequest('email address is illegal.')
         if not is_tel_phone_number(new_user.phone_number):
             return HttpResponseBadRequest('phone number is illegal.')
         if new_user.name.__len__() > 20:
             return HttpResponseBadRequest('name too long.')
+        new_user.password = md5(new_user.password)
         new_user.save()
-    except DataError as e:
+    except (DataError, ValueError) as e:
+        logger.exception(e)
         return HttpResponseServerError(e)
     logger.info('add user' + new_user.name)
     return HttpResponse('user save success')
