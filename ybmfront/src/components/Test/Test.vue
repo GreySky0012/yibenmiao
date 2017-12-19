@@ -1,11 +1,11 @@
 <template>
   <div>
     <title>Test Page</title>
-    <router-link to="/Test/Debug">
+    <router-link to="/test/debug">
       <Button>Debug</Button>
     </router-link>
-    <router-link to="/Test">
-      <Button>HelloWorld</Button>
+    <router-link to="/test">
+      <Button>index</Button>
     </router-link>
     <h1>{{msg}}</h1>
     <router-view></router-view>

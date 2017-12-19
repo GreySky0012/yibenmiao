@@ -1,14 +1,14 @@
 <template>
   <div>
     <title>User Page</title>
-    <router-link to="/User/SignIn">
+    <router-link to="/user/sign_in">
       <Button>SignIn</Button>
     </router-link>
-    <router-link to="/User/SignUp">
+    <router-link to="/user/sign_up">
       <Button>SignUp</Button>
     </router-link>
-    <router-link to="/User">
-      <Button>HelloWorld</Button>
+    <router-link to="/user">
+      <Button>index</Button>
     </router-link>
     <h1>{{msg}}</h1>
     <router-view></router-view>

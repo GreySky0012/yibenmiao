@@ -1,5 +1,8 @@
 <template>
-  <div id="app">
+  <div id="Debug">
+    <!--<img src="./assets/logo.png">-->
+    <router-view>s</router-view>
+    <p id="message" >{{msg}}</p>
     <button @click=myOnClick()>{{button}}</button>
   </div>
 </template>
@@ -9,24 +12,24 @@
     name: 'Debug',
     data () {
       return {
-        button: 'This is a button'
+        button: 'This is a button',
+        msg: 'Show the message'
       }
     },
     methods: {
       myOnClick () {
-        alert('This button is onclick!!!')
+        alert('enter thr function')
+        this.$http.get('http://127.0.0.1:8000/api/v1/debug/').then((response) => {
+          document.getElementById('message').innerHTML = response.data
+        }, (response) => {
+          document.getElementById('message').innerHTML = 'request error'
+        })
       }
     }
   }
 </script>
 
 <style>
-  #app {
-    font-family: 'Avenir', Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-align: center;
-    color: #2c3e50;
-    margin-top: 60px;
-  }
+
+
 </style>

@@ -8,7 +8,7 @@
       <Button>Test</Button>
     </router-link>
     <router-link to="/">
-      <Button>HelloWorld</Button>
+      <Button>index</Button>
     </router-link>
     <router-view></router-view>
     <p class="copyright">Copyright © 2017 ybm. All rights reserved.</p>
