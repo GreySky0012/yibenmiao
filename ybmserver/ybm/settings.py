@@ -126,8 +126,15 @@ WSGI_APPLICATION = 'ybm.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'test',
+        'USER': 'test',
+        'PASSWORD': 'test',
+        'HOST': '120.25.240.242',
+        'PORT': '3306',
+        'OPTIONS': {
+            'init_command': "SET storage_engine=INNODB,sql_mode='STRICT_TRANS_TABLES';",
+        },
     },
     'MySQL': {
         'ENGINE': 'django.db.backends.mysql',
@@ -137,7 +144,7 @@ DATABASES = {
         'HOST': '120.25.240.242',
         'PORT': '3306',
         'OPTIONS': {
-            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+            'init_command': "SET storage_engine=INNODB,sql_mode='STRICT_TRANS_TABLES';",
         },
     },
 }

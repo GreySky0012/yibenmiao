@@ -3,16 +3,14 @@ from __future__ import unicode_literals
 
 import json
 
-from django.db import DataError
 from rest_framework.decorators import api_view
 
 from django.core import serializers
 from django.http import HttpResponse, HttpResponseNotFound, HttpResponseBadRequest, HttpResponseServerError
 
 # Create your views here.
-from ybm.apps.user.models import User
+from ybm.apps.user.models import UserInfo
 from ybm.settings import logger
-from ybm.utils.EncryUtil import md5
 from ybm.utils.regular_util import is_email, is_tel_phone_number
 
 
@@ -30,15 +28,15 @@ def index(request):
 
 
 def __user_list(request):
-    users = User.objects.all()
+    users = UserInfo.objects.all()
     data = serializers.serialize("json", users)
     return HttpResponse(data)
 
 
 def __add_user(request):
     try:
-        new_user = User(**json.loads(request.body))
-        if new_user.name is None or \
+        new_user = UserInfo(**json.loads(request.body))
+        if new_user.username is None or \
                 new_user.phone_number is None or \
                 new_user.password is None:
             return HttpResponseBadRequest('name, phone number or password can not be null.')
@@ -46,19 +44,18 @@ def __add_user(request):
             return HttpResponseBadRequest('email address is illegal.')
         if not is_tel_phone_number(new_user.phone_number):
             return HttpResponseBadRequest('phone number is illegal.')
-        if new_user.name.__len__() > 20:
+        if new_user.username.__len__() > 20:
             return HttpResponseBadRequest('name too long.')
-        new_user.password = md5(new_user.password)
         new_user.save()
-    except (DataError, ValueError) as e:
+    except BaseException as e:
         logger.exception(e)
         return HttpResponseServerError(e)
-    logger.info('add user' + new_user.name)
+    logger.info('add user' + new_user.username)
     return HttpResponse('user save success')
 
 
 def __delete_user(request):
     user_id = int(request.GET.get("id"))
-    User.objects.filter(id=user_id).delete()
+    UserInfo.objects.filter(id=user_id).delete()
     logger.info('delete user : ' + str(user_id))
     return HttpResponse('user delete success')
