@@ -10,4 +10,4 @@ class User(models.Model):
     id = models.AutoField
     name = models.CharField(max_length=20)
     email = models.EmailField(blank=True)
-    phone_number = models.IntegerField(blank=False)
+    phone_number = models.CharField(blank=False, max_length=11)
