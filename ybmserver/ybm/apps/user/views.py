@@ -8,6 +8,7 @@ from django.core import serializers
 from django.http import HttpResponse, HttpResponseNotFound, HttpResponseBadRequest, HttpResponseServerError, \
     HttpResponseForbidden
 from rest_framework.decorators import api_view
+from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
 from ybm.apps.user.models import UserInfo
@@ -72,20 +73,26 @@ def __delete_user(request):
     return HttpResponse('user delete success')
 
 
-@api_view(['POST', 'OPTIONS'])
+@csrf_exempt
+@api_view(['POST'])
 def sign_in(request):
-    username = request.POST['username']
-    password = request.POST['password']
+    try:
+        data = json.loads(request.body)
+        username = data.get('username')
+        password = data.get('password')
 
-    user = authenticate(username=username, password=password)
+        user = authenticate(username=username, password=password)
 
-    if user is not None:
-        if user.is_active:
-            logger.info('user %s login ' % username)
-            login(request, user)
-            return HttpResponse(user)
+        if user is not None:
+            if user.is_active:
+                logger.info('user %s login ' % username)
+                login(request, user)
+                return HttpResponse(json.dumps({'username': user.username}), content_type="application/json")
+            else:
+                logger.warning('user %s is not active ' % username)
+                return HttpResponseForbidden('user is not active')
         else:
-            logger.warning('user %s is not active ' % username)
-            return HttpResponseForbidden('user is not active')
-    else:
-        return HttpResponseForbidden('username or password error')
+            return HttpResponseForbidden('username or password error')
+    except BaseException as e:
+        logger.exception(e)
+        return HttpResponseServerError(e)
