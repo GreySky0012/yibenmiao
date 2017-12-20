@@ -3,14 +3,17 @@ from __future__ import unicode_literals
 
 import json
 
+from django.contrib.auth import authenticate, login
 from rest_framework.decorators import api_view
 
 from django.core import serializers
-from django.http import HttpResponse, HttpResponseNotFound, HttpResponseBadRequest, HttpResponseServerError
+from django.http import HttpResponse, HttpResponseNotFound, HttpResponseBadRequest, HttpResponseServerError, \
+    HttpResponseForbidden
 
 # Create your views here.
 from ybm.apps.user.models import UserInfo
 from ybm.settings import logger
+from ybm.utils.EncryUtil import md5
 from ybm.utils.regular_util import is_email, is_tel_phone_number
 
 
@@ -46,7 +49,12 @@ def __add_user(request):
             return HttpResponseBadRequest('phone number is illegal.')
         if new_user.username.__len__() > 20:
             return HttpResponseBadRequest('name too long.')
-        new_user.save()
+        UserInfo.objects.create_user(username=new_user.username,
+                                     email=new_user.email,
+                                     password=new_user.password,
+                                     phone_number=new_user.phone_number)
+        # new_user.password = md5(new_user.password)
+        # new_user.save()
     except BaseException as e:
         logger.exception(e)
         return HttpResponseServerError(e)
@@ -55,7 +63,30 @@ def __add_user(request):
 
 
 def __delete_user(request):
-    user_id = int(request.GET.get("id"))
-    UserInfo.objects.filter(id=user_id).delete()
+    try:
+        user_id = int(request.GET.get("id"))
+        UserInfo.objects.filter(id=user_id).delete()
+    except BaseException as e:
+        logger.exception(e)
+        return HttpResponseServerError(e)
     logger.info('delete user : ' + str(user_id))
     return HttpResponse('user delete success')
+
+
+@api_view(['POST'])
+def sign_in(request):
+    username = request.POST['username']
+    password = request.POST['password']
+
+    user = authenticate(username=username, password=password)
+
+    if user is not None:
+        if user.is_active:
+            logger.info('user %s login ' % username)
+            login(request, user)
+            return HttpResponse(user)
+        else:
+            logger.warning('user %s is not active ' % username)
+            return HttpResponseForbidden('user is not active')
+    else:
+        return HttpResponseForbidden('username or password error')
