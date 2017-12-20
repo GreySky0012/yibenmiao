@@ -4,11 +4,10 @@ from __future__ import unicode_literals
 import json
 
 from django.contrib.auth import authenticate, login
-from rest_framework.decorators import api_view
-
 from django.core import serializers
 from django.http import HttpResponse, HttpResponseNotFound, HttpResponseBadRequest, HttpResponseServerError, \
     HttpResponseForbidden
+from rest_framework.decorators import api_view
 
 # Create your views here.
 from ybm.apps.user.models import UserInfo
@@ -73,7 +72,7 @@ def __delete_user(request):
     return HttpResponse('user delete success')
 
 
-@api_view(['POST'])
+@api_view(['POST', 'OPTIONS'])
 def sign_in(request):
     username = request.POST['username']
     password = request.POST['password']
