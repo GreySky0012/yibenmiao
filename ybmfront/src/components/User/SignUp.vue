@@ -64,20 +64,48 @@
     },
     methods: {
       user_sign_up () {
+        console.debug('enter function')
         let request = {
           method: 'POST',
           header: {
             'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(this.new_user)
+          }
         }
-        fetch('http://127.0.0.1:8000/api/v1/user/', request)
+        fetch('http://127.0.0.1:8000/api/v1/user/check_username/?username=' + this.new_user.username, request)
           .then(response => {
-            return response.text()
+            console.debug('get check username response success')
+            return response.json()
           }, response => {
-            console.log(response.text())
+            let respData = response.json()
+            console.debug('get check username response failed : ' + respData.error)
+            alert(respData.error)
           }).then(data => {
-            console.log(data)
+            let res = data.result
+            console.debug('check username response result: ' + res)
+            if (res === 'OK') {
+              console.debug('start to sign in')
+              let request = {
+                method: 'POST',
+                header: {
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(this.new_user)
+              }
+              return fetch('http://127.0.0.1:8000/api/v1/user/', request)
+            } else {
+              console.debug('check username failed : ' + res)
+              alert('username already exist')
+            }
+          }).then(response => {
+            console.debug('get sign up response success')
+            return response.json()
+          }, response => {
+            let respData = response.json()
+            console.debug('get sign up response failed : ' + respData.error)
+            alert(respData.error)
+          }).then(data => {
+            console.debug('sign up  response result: ' + data.result)
+            alert('sign up success')
           })
       }
     }

@@ -47,13 +47,13 @@ LOGGING = {
             'formatter': 'standard'
         },
         'file_handler': {
-            'level': 'DEBUG',
+            'level': 'INFO',
             'class': 'logging.handlers.TimedRotatingFileHandler',
             'filename': os.path.join(BASE_DIR, 'ybm.log'),
             'formatter': 'standard'
         },  # 用于文件输出
         'console': {
-            'level': 'INFO',
+            'level': 'DEBUG',
             'filters': ['require_debug_true'],
             'class': 'logging.StreamHandler',
             'formatter': 'standard'
@@ -61,7 +61,7 @@ LOGGING = {
     },
     'loggers': {
         'ybm': {
-            'handlers': ['file_handler', 'console'],
+            'handlers': ['console'],
             'level': 'DEBUG',
             'propagate': True  # 是否继承父类的log信息
         },  # handlers 来自于上面的 handlers 定义的内容
