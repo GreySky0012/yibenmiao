@@ -15,7 +15,15 @@
                 <label >Email</label>
               </dt>
               <dd>
-                <input type="text" name="email"/>
+                <input type="text" v-model="new_user.email" name="email"/>
+              </dd>
+            </dl>
+            <dl class="form-group" >
+              <dt class="input-label">
+                <label >Phone number</label>
+              </dt>
+              <dd>
+                <input type="text" v-model="new_user.phone_number" name="email"/>
               </dd>
             </dl>
             <dl class="form-group" >
@@ -23,7 +31,7 @@
                 <label >Username</label>
               </dt>
               <dd>
-                <input type="text" name="username"/>
+                <input type="text" v-model="new_user.username" name="username"/>
               </dd>
             </dl>
             <dl class="form-group" >
@@ -31,10 +39,10 @@
                 <label >Password</label>
               </dt>
               <dd>
-                <input type="password" name="password"/>
+                <input type="password" v-model="new_user.password" name="password"/>
               </dd>
             </dl>
-            <button @click = user_sign_up(this.form) type="button" class="btn btn-primary" id="sign_up_button">Create an account</button>
+            <button @click = user_sign_up() type="button" class="btn btn-primary" id="sign_up_button">Create an account</button>
           </form>
         </div>
       </div>
@@ -44,9 +52,33 @@
 <script>
   export default {
     name: 'sign-up',
+    data () {
+      return {
+        new_user: {
+          username: '',
+          password: '',
+          email: '',
+          phone_number: ''
+        }
+      }
+    },
     methods: {
-      user_sign_up (from) {
-        this.$http.post('http://127.0.0.1:8000/api/v1/debug/', {})
+      user_sign_up () {
+        let request = {
+          method: 'POST',
+          header: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(this.new_user)
+        }
+        fetch('http://127.0.0.1:8000/api/v1/user/', request)
+          .then(response => {
+            return response.text()
+          }, response => {
+            console.log(response.text())
+          }).then(data => {
+            console.log(data)
+          })
       }
     }
   }
