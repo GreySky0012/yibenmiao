@@ -30,13 +30,19 @@
         }
         fetch('http://127.0.0.1:8000/api/v1/user/sign_in/', request)
           .then(response => {
-            return response.json()
-          }, response => {
-            this.msg = 'request error'
-          }).then(data => {
-            alert(data.username)
-            this.msg = data.username
-          })
+            if (response.ok) {
+              response.json().then(data => {
+                this.msg = data.username
+              })
+            } else {
+              response.json().then(data => {
+                this.msg = data.error
+              })
+            }
+          }).catch(error => {
+            this.msg = error
+          }
+        )
       }
     }
   }

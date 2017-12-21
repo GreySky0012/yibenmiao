@@ -73,15 +73,20 @@
         }
         fetch('http://127.0.0.1:8000/api/v1/user/', request)
           .then(response => {
-            console.debug('get sign up response success')
-            return response.json()
-          }, response => {
-            let respData = response.json()
-            console.debug('get sign up response failed : ' + respData.error)
-            alert(respData.error)
-          }).then(data => {
-            console.debug('sign up  response result: ' + data.result)
-            alert('sign up success')
+            if (response.ok){
+              console.debug('get sign up response success')
+              response.json().then(json => {
+                console.debug('sign up  response result: ' + json.result)
+                alert(json.result)
+              })
+            } else {
+              response.json().then(json => {
+                console.debug('get sign up response failed : ' + json.error)
+                alert(json.error)
+              })
+            }
+          }).catch(error => {
+            alert(error)
           })
       },
       check_username_and_sign_up () {
@@ -94,22 +99,28 @@
         }
         fetch('http://127.0.0.1:8000/api/v1/user/check_username/?username=' + this.new_user.username, request)
           .then(response => {
-            console.debug('get check username response success')
-            return response.json()
-          }, response => {
-            let respData = response.json()
-            console.debug('get check username response failed : ' + respData.error)
-            alert(respData.error)
-          }).then(data => {
-            let res = data.result
-            console.debug('check username response result: ' + res)
-            if (res === 'OK') {
-              console.debug('start to sign in')
-              this.user_sign_up()
+            if (response.ok) {
+              console.debug('get check username response success')
+              response.json().then(data => {
+                let res = data.result
+                console.debug('check username response result: ' + res)
+                if (res === 'OK') {
+                  console.debug('start to sign up')
+                  this.user_sign_up()
+                } else {
+                  console.debug('check username failed : ' + res)
+                  alert('username already exist')
+                }
+              })
             } else {
-              console.debug('check username failed : ' + res)
-              alert('username already exist')
+              response.json().then(data => {
+                console.debug('get check username response failed : ' + data.error)
+                alert(data.error)
+              })
             }
+          }).catch(error => {
+            console.debug(error)
+            alert(error)
           })
       }
     }

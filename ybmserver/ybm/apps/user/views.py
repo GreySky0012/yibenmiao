@@ -5,8 +5,8 @@ import json
 
 from django.contrib.auth import authenticate, login
 from django.core import serializers
-from django.http import HttpResponse, HttpResponseNotFound, HttpResponseBadRequest, HttpResponseServerError, \
-    HttpResponseForbidden
+from django.http.response import HttpResponse, HttpResponseNotFound, HttpResponseBadRequest, HttpResponseServerError, \
+    HttpResponseForbidden, HttpResponseUnauthorized
 from rest_framework.decorators import api_view
 
 # Create your views here.
@@ -98,11 +98,11 @@ def sign_in(request):
                                     content_type="application/json")
             else:
                 logger.warning('user %s is not active ' % username)
-                return HttpResponseForbidden(json.dumps({'error': 'user is not active'}),
-                                             content_type="application/json")
+                return HttpResponseUnauthorized(json.dumps({'error': 'user is not active'}),
+                                                content_type="application/json")
         else:
-            return HttpResponseForbidden(json.dumps({'error': 'username or password error'},
-                                                    content_type="application/json"))
+            return HttpResponseUnauthorized(json.dumps({'error': 'username or password error'}),
+                                            content_type="application/json")
     except BaseException as e:
         logger.exception(e)
         return HttpResponseServerError(json.dumps({'error': e}), content_type="application/json")
