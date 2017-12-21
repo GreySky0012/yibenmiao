@@ -58,7 +58,7 @@ def __add_user(request):
     except BaseException as e:
         logger.exception(e)
         return HttpResponseServerError(e)
-    logger.info('add user' + new_user.username)
+    logger.info('add user ' + new_user.username)
     return HttpResponse('user save success')
 
 
@@ -73,7 +73,6 @@ def __delete_user(request):
     return HttpResponse('user delete success')
 
 
-@csrf_exempt
 @api_view(['POST'])
 def sign_in(request):
     try:
