@@ -42,7 +42,7 @@
                 <input type="password" v-model="new_user.password" name="password"/>
               </dd>
             </dl>
-            <button @click = check_username() type="button" class="btn btn-primary" id="sign_up_button">Create an account</button>
+            <button @click = check_username_and_sign_up() type="button" class="btn btn-primary" id="sign_up_button">Create an account</button>
           </form>
         </div>
       </div>
