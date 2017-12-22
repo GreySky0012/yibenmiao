@@ -10,6 +10,7 @@ urlpatterns = [
 
     # app url
     url(r'^user/', include('ybm.apps.user.urls')),
+    url(r'^blog/', include('ybm.apps.blog.urls')),
 
     url('^debug/', view=debug),
 ]
