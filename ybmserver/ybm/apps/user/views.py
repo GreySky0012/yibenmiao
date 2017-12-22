@@ -6,11 +6,12 @@ import json
 from django.contrib.auth import authenticate, login
 from django.core import serializers
 from django.http.response import HttpResponse, HttpResponseNotFound, HttpResponseBadRequest, HttpResponseServerError, \
-    HttpResponseForbidden, HttpResponseUnauthorized
+    HttpResponseForbidden
 from rest_framework.decorators import api_view
 
 # Create your views here.
 from ybm.apps.user.models import UserInfo
+from ybm.http.response import HttpResponseUnauthorized
 from ybm.settings import logger
 from ybm.utils.EncryUtil import md5
 from ybm.utils.regular_util import is_email, is_tel_phone_number
