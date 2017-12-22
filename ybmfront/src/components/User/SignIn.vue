@@ -8,6 +8,7 @@
 </template>
 
 <script>
+  import Request from '@/http/Request'
   export default {
     name: 'sign-in',
     data () {
@@ -21,28 +22,19 @@
     },
     methods: {
       sign_in () {
-        let request = {
-          method: 'POST',
-          header: {
-            'Content-Type': 'multipart/form-data'
-          },
-          body: JSON.stringify(this.user)
-        }
-        fetch('http://127.0.0.1:8000/api/v1/user/sign_in/', request)
-          .then(response => {
-            if (response.ok) {
-              response.json().then(data => {
-                this.msg = data.username
-              })
-            } else {
-              response.json().then(data => {
-                this.msg = data.error
-              })
-            }
-          }).catch(error => {
-            this.msg = error
+        Request.sign_in_request(this.user).then(response => {
+          if (response.ok) {
+            response.json().then(data => {
+              this.msg = data.username
+            })
+          } else {
+            response.json().then(data => {
+              this.msg = data.error
+            })
           }
-        )
+        }).catch(error => {
+          this.msg = error
+        })
       }
     }
   }

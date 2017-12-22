@@ -50,6 +50,7 @@
 </template>
 
 <script>
+  import Request from '@/http/Request'
   export default {
     name: 'sign-up',
     data () {
@@ -64,64 +65,48 @@
     },
     methods: {
       user_sign_up () {
-        let request = {
-          method: 'POST',
-          header: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(this.new_user)
-        }
-        fetch('http://127.0.0.1:8000/api/v1/user/', request)
-          .then(response => {
-            if (response.ok){
-              console.debug('get sign up response success')
-              response.json().then(json => {
-                console.debug('sign up  response result: ' + json.result)
-                alert(json.result)
-              })
-            } else {
-              response.json().then(json => {
-                console.debug('get sign up response failed : ' + json.error)
-                alert(json.error)
-              })
-            }
-          }).catch(error => {
-            alert(error)
-          })
+        Request.sign_up_request(this.new_user).then(response => {
+          if (response.ok) {
+            console.debug('get sign up response success')
+            response.json().then(json => {
+              console.debug('sign up  response result: ' + json.result)
+              alert(json.result)
+            })
+          } else {
+            response.json().then(json => {
+              console.debug('get sign up response failed : ' + json.error)
+              alert(json.error)
+            })
+          }
+        }).catch(error => {
+          alert(error)
+        })
       },
       check_username_and_sign_up () {
-        console.debug('enter function')
-        let request = {
-          method: 'POST',
-          header: {
-            'Content-Type': 'application/json'
+        Request.check_username(this.new_user.username).then(response => {
+          if (response.ok) {
+            console.debug('get check username response success')
+            response.json().then(data => {
+              let res = data.result
+              console.debug('check username response result: ' + res)
+              if (res === 'OK') {
+                console.debug('start to sign up')
+                this.user_sign_up()
+              } else {
+                console.debug('check username failed : ' + res)
+                alert('username already exist')
+              }
+            })
+          } else {
+            response.json().then(data => {
+              console.debug('get check username response failed : ' + data.error)
+              alert(data.error)
+            })
           }
-        }
-        fetch('http://127.0.0.1:8000/api/v1/user/check_username/?username=' + this.new_user.username, request)
-          .then(response => {
-            if (response.ok) {
-              console.debug('get check username response success')
-              response.json().then(data => {
-                let res = data.result
-                console.debug('check username response result: ' + res)
-                if (res === 'OK') {
-                  console.debug('start to sign up')
-                  this.user_sign_up()
-                } else {
-                  console.debug('check username failed : ' + res)
-                  alert('username already exist')
-                }
-              })
-            } else {
-              response.json().then(data => {
-                console.debug('get check username response failed : ' + data.error)
-                alert(data.error)
-              })
-            }
-          }).catch(error => {
-            console.debug(error)
-            alert(error)
-          })
+        }).catch(error => {
+          console.debug(error)
+          alert(error)
+        })
       }
     }
   }
