@@ -8,6 +8,7 @@
     },
     sign_in_request (body) {
       let request = {
+        credentials: 'include',
         method: 'POST',
         header: {
           'Content-Type': 'multipart/form-data'
@@ -18,6 +19,7 @@
     },
     sign_up_request (body) {
       let request = {
+        credentials: 'include',
         method: 'POST',
         header: {
           'Content-Type': 'application/json'
@@ -28,6 +30,7 @@
     },
     check_username (username) {
       let request = {
+        credentials: 'include',
         method: 'POST',
         header: {
           'Content-Type': 'application/json'

@@ -19,11 +19,27 @@
     methods: {
       myOnClick () {
         alert('enter thr function')
-        this.$http.get('http://127.0.0.1:8000/api/v1/debug/').then((response) => {
-          document.getElementById('message').innerHTML = response.data
-        }, (response) => {
-          document.getElementById('message').innerHTML = 'request error'
-        })
+        let request = {
+          credentials: 'include',
+          method: 'GET',
+          header: {
+            'Content-Type': 'application/json'
+          }
+        }
+        fetch('http://127.0.0.1:8000/api/v1/debug/', request)
+          .then((response) => {
+            if (response.ok) {
+              response.json().then(json => {
+                this.msg = json.result
+              })
+            } else {
+              response.json().then(json => {
+                alert(json.error)
+              })
+            }
+          }).catch(error => {
+            alert(error)
+          })
       }
     }
   }
