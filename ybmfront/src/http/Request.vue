@@ -6,12 +6,22 @@
         server: 'http://127.0.0.1:8000/api/v1/'
       }
     },
+    cookie (key) {
+      let cookies = document.cookie.split(/[;=]/)
+      for (let i = 0; i < cookies.length; i++) {
+        if (key === cookies[i].trim()) {
+          return cookies[1 + i]
+        }
+      }
+      return ''
+    },
     sign_in_request (body) {
       let request = {
         credentials: 'include',
         method: 'POST',
-        header: {
-          'Content-Type': 'multipart/form-data'
+        headers: {
+          'X-CSRFtoken': this.cookie('csrftoken'),
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify(body)
       }
@@ -21,7 +31,8 @@
       let request = {
         credentials: 'include',
         method: 'POST',
-        header: {
+        headers: {
+          'X-CSRFtoken': this.cookie('csrftoken'),
           'Content-Type': 'application/json'
         },
         body: JSON.stringify(body)
@@ -32,7 +43,8 @@
       let request = {
         credentials: 'include',
         method: 'POST',
-        header: {
+        headers: {
+          'X-CSRFtoken': this.cookie('csrftoken'),
           'Content-Type': 'application/json'
         }
       }

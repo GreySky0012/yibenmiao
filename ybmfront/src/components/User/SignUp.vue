@@ -74,8 +74,8 @@
             })
           } else {
             response.json().then(json => {
-              console.debug('get sign up response failed : ' + json.error)
-              alert(json.error)
+              console.debug('get sign up response failed : ' + json.detail)
+              alert(json.detail)
             })
           }
         }).catch(error => {
@@ -99,8 +99,8 @@
             })
           } else {
             response.json().then(data => {
-              console.debug('get check username response failed : ' + data.error)
-              alert(data.error)
+              console.debug('get check username response failed : ' + data.detail)
+              alert(data.detail)
             })
           }
         }).catch(error => {

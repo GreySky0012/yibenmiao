@@ -29,7 +29,7 @@
             })
           } else {
             response.json().then(data => {
-              this.msg = data.error
+              this.msg = data.detail
             })
           }
         }).catch(error => {

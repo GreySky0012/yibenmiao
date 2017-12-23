@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 author = 'qiyue'
 
+import json
 
 class AccessControlAllowOrigin(object):
     def __init__(self, get_response):
@@ -16,9 +17,9 @@ class AccessControlAllowOrigin(object):
 
         # Code to be executed for each request/response after
         # the view is called.
-        response["Access-Control-Allow-Origin"] = "*"
+        response["Access-Control-Allow-Origin"] = "http://127.0.0.1:8080"
         response["Access-Control-Allow-Methods"] = "POST, GET, OPTIONS"
         response["Access-Control-Max-Age"] = "1000"
-        response["Access-Control-Allow-Headers"] = "*"
+        response["Access-Control-Allow-Headers"] = "Content-Type, X-CSRFtoken"
         response['Access-Control-Allow-Credentials'] = "true"
         return response
