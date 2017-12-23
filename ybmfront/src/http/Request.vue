@@ -32,7 +32,6 @@
         credentials: 'include',
         method: 'POST',
         headers: {
-          'X-CSRFtoken': this.cookie('csrftoken'),
           'Content-Type': 'application/json'
         },
         body: JSON.stringify(body)
@@ -44,7 +43,6 @@
         credentials: 'include',
         method: 'POST',
         headers: {
-          'X-CSRFtoken': this.cookie('csrftoken'),
           'Content-Type': 'application/json'
         }
       }

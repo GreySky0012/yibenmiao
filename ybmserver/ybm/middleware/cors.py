@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 author = 'qiyue'
 
-import json
 
 class AccessControlAllowOrigin(object):
     def __init__(self, get_response):

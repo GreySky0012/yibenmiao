@@ -8,7 +8,6 @@ from django.core import serializers
 from django.http.response import HttpResponse, HttpResponseNotFound, HttpResponseBadRequest, HttpResponseServerError, \
     HttpResponseForbidden
 from rest_framework.decorators import api_view
-from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
 from ybm.apps.user.models import UserInfo
@@ -18,7 +17,21 @@ from ybm.utils.EncryUtil import md5
 from ybm.utils.regular_util import is_email, is_tel_phone_number
 
 
-@csrf_exempt
+def csrf_disable(view_func):
+    """
+    Marks a view function as being exempt from the CSRF view protection.
+    """
+    # We could just do view_func.csrf_exempt = True, but decorators
+    # are nicer if they don't have side-effects, so we return a new
+    # function.
+    def wrapped_view(*args, **kwargs):
+        setattr(args[0], '_dont_enforce_csrf_checks', True)
+        return view_func(*args, **kwargs)
+    wrapped_view.csrf_exempt = True
+    return wrapped_view
+
+
+@csrf_disable
 @api_view(['GET', 'PUT', 'POST', 'DELETE'])
 def index(request):
     method = request.method
@@ -86,6 +99,7 @@ def __delete_user(request):
                         content_type="application/json")
 
 
+@csrf_disable
 @api_view(['POST'])
 def sign_in(request):
     try:
@@ -112,7 +126,7 @@ def sign_in(request):
         return HttpResponseServerError(json.dumps({'detail': e}), content_type="application/json")
 
 
-@csrf_exempt
+@csrf_disable
 @api_view(['POST'])
 def check_username(request):
     try:
