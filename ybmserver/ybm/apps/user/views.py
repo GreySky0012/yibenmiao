@@ -5,30 +5,15 @@ import json
 
 from django.contrib.auth import authenticate, login
 from django.core import serializers
-from django.http.response import HttpResponse, HttpResponseNotFound, HttpResponseBadRequest, HttpResponseServerError, \
-    HttpResponseForbidden
+from django.http.response import HttpResponse, HttpResponseNotFound, HttpResponseBadRequest, HttpResponseServerError
 from rest_framework.decorators import api_view
 
 # Create your views here.
 from ybm.apps.user.models import UserInfo
 from ybm.http.response import HttpResponseUnauthorized
+from ybm.middleware.cors import csrf_disable
 from ybm.settings import logger
-from ybm.utils.EncryUtil import md5
 from ybm.utils.regular_util import is_email, is_tel_phone_number
-
-
-def csrf_disable(view_func):
-    """
-    Marks a view function as being exempt from the CSRF view protection.
-    """
-    # We could just do view_func.csrf_exempt = True, but decorators
-    # are nicer if they don't have side-effects, so we return a new
-    # function.
-    def wrapped_view(*args, **kwargs):
-        setattr(args[0], '_dont_enforce_csrf_checks', True)
-        return view_func(*args, **kwargs)
-    wrapped_view.csrf_exempt = True
-    return wrapped_view
 
 
 @csrf_disable

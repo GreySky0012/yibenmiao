@@ -94,7 +94,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'ybm.middleware.cors.AccessControlAllowOrigin',
     # 全局屏蔽csrf检验
-    # 'ybm.middleware.dont_enforce_csrf.DisableCSRFCheck',
+    # 'ybm.middleware.cors.DisableCSRFCheck',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
